@@ -1,0 +1,109 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Profile</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+
+<body>
+
+    <h1>
+
+        {{ profile_user.username }}
+
+    </h1>
+
+    <p>
+
+        Followers: {{ followers }}
+
+    </p>
+
+    <p>
+
+        Following: {{ following }}
+
+    </p>
+
+    <a href="/follow/{{ profile_user.id }}/">
+
+        <button>
+
+            Follow
+
+        </button>
+
+    </a>
+
+    <br><br>
+
+    <a href="/">
+
+        Back To Feed
+
+    </a>
+
+    <hr>
+
+    <h2>
+
+        User Posts
+
+    </h2>
+
+    {% for post in posts %}
+
+    <div class="post">
+
+        <img src="{{ post.image }}" width="300">
+
+        <p>
+
+            {{ post.caption }}
+
+        </p>
+
+        <p>
+
+            Likes: {{ post.like_set.all.count }}
+
+        </p>
+
+        <h4>
+
+            Comments
+
+        </h4>
+
+        {% for comment in post.comment_set.all %}
+
+        <p>
+
+            <b>
+
+                {{ comment.user.username }}
+
+            </b>
+
+            :
+
+            {{ comment.text }}
+
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+    {% endfor %}
+
+</body>
+
+</html>

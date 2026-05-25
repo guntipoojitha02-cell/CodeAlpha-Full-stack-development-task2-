@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Social Media</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+
+<body>
+
+    <h1>Social Media Feed</h1>
+
+    <a href="/create-post/">Create Post</a>
+
+    <hr>
+
+    {% for post in posts %}
+
+    <div class="post">
+
+        <h3>
+
+            <a href="/profile/{{ post.user.id }}/">
+
+            {{ post.user.username }}
+
+            </a>
+
+        </h3>
+
+        <img src="{{ post.image }}" width="300">
+
+        <p>{{ post.caption }}</p>
+
+       <a href="/like/{{ post.id }}/">Like</a>
+
+    <p>
+
+        Likes: {{ post.like_set.all.count }}
+
+    </p>
+
+        <br><br>
+
+        <form action="/comment/{{ post.id }}/" method="POST">
+
+            {% csrf_token %}
+
+            <input type="text" name="text">
+
+            <button type="submit">Comment</button>
+
+        </form>
+        <br>
+
+    <h4>Comments</h4>
+
+        {% for comment in post.comment_set.all %}
+
+    <p>
+
+        <b>{{ comment.user.username }}</b> :
+
+        {{ comment.text }}
+
+    </p>
+
+    {% endfor %}
+
+    </div>
+
+    {% endfor %}
+
+</body>
+
+</html>
